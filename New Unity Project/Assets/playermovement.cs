@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
+    public GameObject firstPerson;
+    public GameObject thirdPerson;
+
 
     public int moveSpeed = 1;
-    bool isGrounded = false;
+    public bool isGrounded = false;
     public float jumpForce = 7f;
     public float rotateSpeed = 5;
     public Vector3 respawnPosition;
@@ -14,6 +17,7 @@ public class playermovement : MonoBehaviour
     {
         Cursor.visible = false;
         respawnPosition= transform.position;
+        ToggleThird();
     }
 
     // Update is called once per frame
@@ -30,16 +34,11 @@ public class playermovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(GetComponent<Rigidbody>().velocity.y == 0)
-        {
-            isGrounded = true;
-        }
-
         if (isGrounded)
         {
-
             if (Input.GetAxis("Jump") > 0)
             {
+                Debug.Log("Jumped: " + Time.time);
                 isGrounded = false;
                 GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
@@ -52,5 +51,16 @@ public class playermovement : MonoBehaviour
         transform.position = respawnPosition;
     }
     
+    public void ToggleFirst()
+    {
+        firstPerson.SetActive(true);
+        thirdPerson.SetActive(false);
+    }
+
+    public void ToggleThird()
+    {
+        thirdPerson.SetActive(true);
+        firstPerson.SetActive(false);
+    }
     
 } //end of script

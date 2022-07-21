@@ -9,10 +9,13 @@ public class smackyScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        print("tag");
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.collider.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, collision.contacts[0].point,7, 6);
+        }
 
 
-        collision.collider.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, collision.contacts[0].point,7, 6);
+        
     }
 
 }
